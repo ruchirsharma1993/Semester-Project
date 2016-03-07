@@ -3,6 +3,7 @@
     Created on : Mar 7, 2016, 12:38:04 PM
     Author     : ruchir-pc
 --%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.Random"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.ArrayList"%>
@@ -69,19 +70,25 @@
 		<div id="page-bgtop">
 			<div id="page-bgbtm">
 				<div id="content">
-                                    <h2> Results for: <%=searchQuery %></h2>
+                                    <!-- <h2> Results for: <%=searchQuery %></h2> -->
 				<%try
                                 {
-                                    String ad_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ad_documents";
-                                    String news_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_articles";
+                                    //String ad_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ad_documents";
+                                    //String news_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_articles";
                                     
-                                    String news_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_index";
-                                    String ad_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ads_index";
+                                    //String news_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_index";
+                                    //String ad_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ads_index";
                                     
-                                  
-                                  
+                                    String ad_dataDir = "G:\\Assignments\\Semester Project\\ads\\ad_documents";
+                                    String news_dataDir = "G:\\Assignments\\Semester Project\\news\\news_articles";
+                                    
+                                    String news_indexDir = "G:\\Assignments\\Semester Project\\news\\index";
+                                    String ad_indexDir = "G:\\Assignments\\Semester Project\\ads\\index";
+                                                   
                                     Searcher search_news;
                                     Searcher search_ad;
+                                    
+                                    HashMap<String, Boolean> uniqueNews = new HashMap<String, Boolean>();
                                     
                                     search_news = new Searcher(news_indexDir);
                                     search_ad = new Searcher(ad_indexDir);
@@ -112,6 +119,11 @@
                                             {
                                                 br.readLine();
                                                 news_title = br.readLine();
+                                                
+                                                if(uniqueNews.containsKey(news_title)) // check to ensure news does not repeat
+                                                    continue;
+                                                
+                                                uniqueNews.put(news_title, true);
                                                 news_url = br.readLine();
                                                 
                                                  news_desc = br.readLine();
@@ -141,7 +153,7 @@
                                     search_news.close();
 
                                     TopDocs hits_ad = search_ad.search(searchQuery);
-                                    System.out.println("Advertisement found: "+hits_ad.totalHits );
+                                    System.out.println("Advertisement found: " + hits_ad.totalHits );
                                    
                                     ArrayList<String> ad_data = new ArrayList<String>();
                                     try
