@@ -12,7 +12,7 @@
 <%@page import="java.io.BufferedReader"%>
 <%@page import="com.Searcher"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page session="false" %>
 <%@page import="java.sql.*"%>
 <%@page import="com.LuceneConstants"%>
 <%@page import="java.io.File"%>
@@ -43,7 +43,60 @@
 </head>
 <body>
     <%
-      String searchQuery = request.getParameter("query");
+         String searchQuery = "";
+        try
+        {
+            searchQuery = request.getParameter("query");
+        }
+        catch(Exception e)
+        {
+            response.sendRedirect("index.html");
+        }
+        
+        HttpSession cur_session = request.getSession();
+        
+        String user_name = (String)cur_session.getAttribute("uname");
+        
+        if(user_name==null)
+        {
+            System.out.println(user_name);
+         
+           %><jsp:forward page="index.html" /><%
+        }
+        String user_id = (String)cur_session.getAttribute("user_id");
+
+      //Insert into DB
+        Class.forName("com.mysql.jdbc.Driver");
+        String db_con = LuceneConstants.mysql_db_con;
+        String mysql_user = LuceneConstants.mysql_user_name;
+        String mysql_pass = LuceneConstants.mysql_user_pass;
+                  
+        Connection con = DriverManager.getConnection(db_con, mysql_user, mysql_pass);
+        String command="Insert into search_hist values(?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(command);
+        pstmt.setInt(1, Integer.parseInt(user_id));
+        pstmt.setString(2, searchQuery);
+        
+        java.util.Date date= new java.util.Date();
+	//System.out.println(new Timestamp(date.getTime()));
+        pstmt.setTimestamp(3,new Timestamp(date.getTime()) );
+            
+        int i =pstmt.executeUpdate();
+        if(i==1)
+        {
+            System.out.println("Details entered in search_history");
+        }
+        else
+        {
+            System.out.println("Insertion in databse failed. Redirected to homepage");
+            %>
+                       <script type=\"text/javascript\">
+                                alert('Operation Aborted. Database Issue')
+                                location='home.html'
+                       </script>
+                <% 
+        }
+      
     %>
 <div id="wrapper">
 	<div id="header-wrapper">
@@ -57,10 +110,10 @@
 	<!-- end #header -->
 	<div id="menu">
 		<ul>
-			<li class="current_page_item"><a href="#">Home</a></li>
-			
-                        <li><a href="#">History</a></li>
+			<li><a href="home.jsp">Home</a></li>
+			<li><a href="show_history.jsp">History</a></li>
                         <li><a href="#">About</a></li>
+                        <li><a href="log_out">Log-Out</a></li>
 		</ul>
 	</div>
 	<!-- end #menu -->

@@ -24,10 +24,23 @@
 		</div>
 	</div>
 	<!-- end #header -->
+        <%
+          HttpSession cur_session = request.getSession();
+        
+         String user_name = (String)cur_session.getAttribute("uname");
+        
+         if(user_name==null)
+         {
+            System.out.println(user_name);
+         
+           %><jsp:forward page="index.html" /><%
+          }
+          String user_id = (String)cur_session.getAttribute("user_id");
+        %>
 	<div id="menu">
 		<ul>
 			<li class="current_page_item"><a href="#">Home</a></li>
-			<li><a href="#">History</a></li>
+			<li><a href="show_history.jsp">History</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="log_out">Log-Out</a></li>
                         
@@ -39,7 +52,7 @@
 			<div id="page-bgbtm">
 				<div id="content">
 					<div class="post">
-						<h2 class="title">Your Feed is Currently Empty</h2>
+						<h2 class="title">Welcome, <%=user_name%></h2>
 					</div>
 					
 					
