@@ -90,8 +90,8 @@
                                     
                                     HashMap<String, Boolean> uniqueNews = new HashMap<String, Boolean>();
                                     
-                                    search_news = new Searcher(news_indexDir);
-                                    search_ad = new Searcher(ad_indexDir);
+                                    search_news = new Searcher(news_indexDir, false);
+                                    search_ad = new Searcher(ad_indexDir, true);
                                     
                                     long startTime = System.currentTimeMillis();
                                     TopDocs hits = search_news.search(searchQuery);
@@ -99,7 +99,8 @@
                                     
                                     System.out.println(hits.totalHits + " documents found. Time : " +
                                     (endTime - startTime) + " ms.");
-
+                                    
+                                    int news_items = 0;
                                     for(ScoreDoc scoreDoc : hits.scoreDocs) 
                                     {
                                             Document doc = search_news.getDocument(scoreDoc);
@@ -124,7 +125,7 @@
                                                     continue;
                                                 
                                                 uniqueNews.put(news_title, true);
-                                                news_url = br.readLine();
+                                                news_url = br.readLine().replace(" amp;", "&").replace("amp;","");
                                                 
                                                  news_desc = br.readLine();
                                                   news_category = br.readLine();
@@ -149,6 +150,9 @@
                                             {
                                                 System.out.println("Exception in reading news"+e);
                                             }
+                                    news_items++;
+                                    if(news_items == 10)
+                                        break;
                                     }
                                     search_news.close();
 
@@ -187,7 +191,7 @@
                                     }
                                     catch(Exception e)
                                     {
-                                        System.out.println("Exception in processing news"+e.getLocalizedMessage());
+                                        System.out.println("Exception in processing news" + e.getLocalizedMessage());
                                     }
                         %>
                                 </div>
@@ -206,15 +210,23 @@
 					<h2>ADVERTISEMENT</h2>      
                             <%
                                     int val = ad_data.size();
-                                    if(val>10)
-                                            val=10;
-                                    for(int j=0;j<val;j++)
+                                    //if(val>10)
+                                            //val=10;
+                                    int cnt = 0;
+                                    for(int j=0;j<val;)
                                     {
+                                        System.out.println(ad_data.get(j));
+                                        if(ad_data.get(j) == null)
+                                            continue;
                                         String spl[] = ad_data.get(j).split(",");
                                         String title = spl[0].toUpperCase();
                                        
                                         String url = spl[1];
                                         String desc = spl[2];
+                                        j++;
+                                        cnt++;
+                                        if(cnt == 10)
+                                            break;
                             %>
                                   <li>
 					<ul>
@@ -236,7 +248,7 @@
                                 }
                                 catch(Exception e)
                                 {
-                                    System.out.println("Exception: "+e+e.getLocalizedMessage());
+                                    System.out.println("Exception Overall: " + e);
                                     e.printStackTrace();
                                 }
                                                 

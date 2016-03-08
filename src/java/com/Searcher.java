@@ -31,18 +31,23 @@ public class Searcher {
     IndexSearcher indexSearcher;
 	QueryParser queryParser;
 	Query query;
-	
-	public Searcher(String indexDirectoryPath) throws IOException {
+	Boolean ad_search;
+        
+	public Searcher(String indexDirectoryPath, Boolean searchType) throws IOException {
 		Directory indexDirectory = FSDirectory.open(new File(indexDirectoryPath));
 		indexSearcher = new IndexSearcher(indexDirectory);
 		queryParser = new QueryParser(Version.LUCENE_36,
 				LuceneConstants.CONTENTS, new StandardAnalyzer(Version.LUCENE_36));
+                ad_search = searchType;
 	}
 	
 	public TopDocs search(String searchQuery) throws IOException, org.apache.lucene.queryParser.ParseException {
 		
 		query = queryParser.parse(searchQuery);
-		return indexSearcher.search(query, LuceneConstants.MAX_SEARCH);
+                if(ad_search)
+                    return indexSearcher.search(query, LuceneConstants.MAX_SEARCH_ADS);
+                else
+                    return indexSearcher.search(query, LuceneConstants.MAX_SEARCH_NEWS);
 	}
 	
 	public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
