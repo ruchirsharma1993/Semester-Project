@@ -59,8 +59,12 @@ public class login_serv extends HttpServlet {
             try
             {
                   Class.forName("com.mysql.jdbc.Driver");
-                  String db_con = LuceneConstants.db_connection;
-                  Connection con = DriverManager.getConnection(db_con);
+                  
+                  String db_con = LuceneConstants.mysql_db_con;
+                  String mysql_user = LuceneConstants.mysql_user_name;
+                  String mysql_pass = LuceneConstants.mysql_user_pass;
+                  
+                  Connection con = DriverManager.getConnection(db_con, mysql_user, mysql_pass);
                   PreparedStatement ps=con.prepareStatement("select * from user_details where uname=? and pass=?");
                   ps.setString(1, uname);
                   ps.setString(2, pass);

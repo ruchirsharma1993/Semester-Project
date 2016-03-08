@@ -38,13 +38,15 @@ public class LuceneConstants
         /*******************************************************************************************************************
                Constants for MYSQL DB Connection
         *******************************************************************************************************************/
+        
+        //Update these strings as per your details
         public static final String mysql_db_name = "sem_proj";
         public static final String mysql_user_name = "ruchir";
         public static final String mysql_user_pass = "ruchir";
         public static final String mysql_port_no = "3306";
         
-       
-        public static final String db_connection ="\"jdbc:mysql://localhost:" + mysql_port_no + "/" + mysql_db_name + "\"" + ", " + "\"" + mysql_user_name+ "\"" + ", "+ "\"" + mysql_user_pass+ "\"";
+        //Do not make changes to this string
+        public static final String mysql_db_con = "jdbc:mysql://localhost:" + mysql_port_no + "/" + mysql_db_name;
         
     
 }

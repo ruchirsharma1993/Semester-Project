@@ -211,7 +211,10 @@
                                     {
                                         System.out.println(ad_data.get(j));
                                         if(ad_data.get(j) == null)
+                                        {
+                                            j++;
                                             continue;
+                                        }
                                         String spl[] = ad_data.get(j).split(",");
                                         String title = spl[0].toUpperCase();
                                        
