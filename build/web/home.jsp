@@ -20,7 +20,6 @@
 		<div id="header">
 			<div id="logo">
 				<h1><a href="#">HOME</a></h1>
-				
 			</div>
 		</div>
 	</div>
@@ -28,8 +27,10 @@
 	<div id="menu">
 		<ul>
 			<li class="current_page_item"><a href="#">Home</a></li>
-			   <li><a href="#">History</a></li>
+			<li><a href="#">History</a></li>
                         <li><a href="#">About</a></li>
+                        <li><a href="log_out">Log-Out</a></li>
+                        
 		</ul>
 	</div>
 	<!-- end #menu -->
@@ -39,7 +40,6 @@
 				<div id="content">
 					<div class="post">
 						<h2 class="title">Your Feed is Currently Empty</h2>
-						
 					</div>
 					
 					
@@ -59,14 +59,7 @@
                                                 </li>
                                                 <h2>Advertisements</h2>
 						<li>
-							
-						</li>
-						<li>
-							
-						</li>
-						<li>
-							
-						</li>
+						
 					</ul>
 				</div>
 				<!-- end #sidebar -->
