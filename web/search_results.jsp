@@ -73,17 +73,11 @@
                                     <!-- <h2> Results for: <%=searchQuery %></h2> -->
 				<%try
                                 {
-                                    //String ad_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ad_documents";
-                                    //String news_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_articles";
+                                    String ad_dataDir = LuceneConstants.ad_dataDir;
+                                    String news_dataDir = LuceneConstants.news_dataDir;
                                     
-                                    //String news_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_index";
-                                    //String ad_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ads_index";
-                                    
-                                    String ad_dataDir = "G:\\Assignments\\Semester Project\\ads\\ad_documents";
-                                    String news_dataDir = "G:\\Assignments\\Semester Project\\news\\news_articles";
-                                    
-                                    String news_indexDir = "G:\\Assignments\\Semester Project\\news\\index";
-                                    String ad_indexDir = "G:\\Assignments\\Semester Project\\ads\\index";
+                                    String news_indexDir = LuceneConstants.news_indexDir; 
+                                    String ad_indexDir = LuceneConstants.ad_indexDir;
                                                    
                                     Searcher search_news;
                                     Searcher search_ad;

@@ -56,7 +56,8 @@ public class register extends HttpServlet {
             try
             {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sem_proj", "ruchir", "ruchir");
+                String db_con = LuceneConstants.db_connection;
+                Connection con = DriverManager.getConnection(db_con);
                 
                 //Extract max user_id
                 int user_id=5000;
