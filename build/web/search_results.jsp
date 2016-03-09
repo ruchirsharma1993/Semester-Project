@@ -44,9 +44,11 @@
 <body>
     <%
          String searchQuery = "";
+         String q_type="";
         try
         {
             searchQuery = request.getParameter("query");
+            q_type = request.getParameter("type");
         }
         catch(Exception e)
         {
@@ -65,36 +67,40 @@
         }
         String user_id = (String)cur_session.getAttribute("user_id");
 
-      //Insert into DB
-        Class.forName("com.mysql.jdbc.Driver");
-        String db_con = LuceneConstants.mysql_db_con;
-        String mysql_user = LuceneConstants.mysql_user_name;
-        String mysql_pass = LuceneConstants.mysql_user_pass;
-                  
-        Connection con = DriverManager.getConnection(db_con, mysql_user, mysql_pass);
-        String command="Insert into search_hist values(?,?,?)";
-        PreparedStatement pstmt = con.prepareStatement(command);
-        pstmt.setInt(1, Integer.parseInt(user_id));
-        pstmt.setString(2, searchQuery);
-        
-        java.util.Date date= new java.util.Date();
-	//System.out.println(new Timestamp(date.getTime()));
-        pstmt.setTimestamp(3,new Timestamp(date.getTime()) );
-            
-        int i =pstmt.executeUpdate();
-        if(i==1)
+      //Insert into DB if query type is 1
+        if(q_type.equals("1"))
         {
-            System.out.println("Details entered in search_history");
-        }
-        else
-        {
-            System.out.println("Insertion in databse failed. Redirected to homepage");
-            %>
-                       <script type=\"text/javascript\">
-                                alert('Operation Aborted. Database Issue')
-                                location='home.html'
-                       </script>
-                <% 
+          Class.forName("com.mysql.jdbc.Driver");
+                String db_con = LuceneConstants.mysql_db_con;
+                String mysql_user = LuceneConstants.mysql_user_name;
+                String mysql_pass = LuceneConstants.mysql_user_pass;
+
+                Connection con = DriverManager.getConnection(db_con, mysql_user, mysql_pass);
+                String command="Insert into search_hist values(?,?,?)";
+                PreparedStatement pstmt = con.prepareStatement(command);
+                pstmt.setInt(1, Integer.parseInt(user_id));
+                pstmt.setString(2, searchQuery);
+
+                java.util.Date date= new java.util.Date();
+                //System.out.println(new Timestamp(date.getTime()));
+                pstmt.setTimestamp(3,new Timestamp(date.getTime()) );
+
+                int i =pstmt.executeUpdate();
+                if(i==1)
+                {
+                    System.out.println("Details entered in search_history");
+                }
+                else
+                {
+                    System.out.println("Insertion in databse failed. Redirected to homepage");
+                    %>
+                               <script type=\"text/javascript\">
+                                        alert('Operation Aborted. Database Issue')
+                                        location='home.html'
+                               </script>
+                        <% 
+                }
+
         }
       
     %>
@@ -249,6 +255,7 @@
 							  <form action="search_results.jsp">
                                                             <ul>
                                                                 <li><input type="text" value="" name="query" placeholder="Enter your query here" /></li>
+                                                                <input type="hidden" value="1" name="type"/>
                                                                 <li><button class="button" type="submit"  name="search">Search</button></li>
                                                             </ul>
                                                           </form>

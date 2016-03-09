@@ -42,7 +42,8 @@
         HttpSession cur_session = request.getSession();
        
         String user_name = (String)cur_session.getAttribute("uname");
-         System.out.println("Username is " + user_name);
+        
+        System.out.println("Username is " + user_name);
         if(user_name==null)
         {
             System.out.println("Username is null");
@@ -81,7 +82,7 @@
                                                        <tr> 
                                                        <td><%=rs.getString("search_text") %></td>
                                                        <td><%= rs.getTimestamp("time") %></td>
-                                                       <td><button><a href="search_results.jsp?query=<%=rs.getString("search_text")%>">View Results</a></button></td> 
+                                                       <td><button><a href="search_results.jsp?type=2&query=<%=rs.getString("search_text")%>">View Results</a></button></td> 
                                                        </tr>
                                                    <% 
                                                     }

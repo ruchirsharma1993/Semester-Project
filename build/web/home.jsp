@@ -66,6 +66,7 @@
 							  <form action="search_results.jsp">
                                                             <ul>
                                                                 <li><input type="text" value="" name="query" placeholder="Enter your query here" /></li>
+                                                                <input type="hidden" value="1" name="type"/>
                                                                 <li><button class="button" type="submit"  name="search">Search</button></li>
                                                             </ul>
                                                           </form>
