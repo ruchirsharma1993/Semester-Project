@@ -37,7 +37,7 @@ public class register extends HttpServlet {
         String pass = request.getParameter("password");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        
+        String category[] = request.getParameterValues("category");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -55,6 +55,15 @@ public class register extends HttpServlet {
             out.println("</html>");
             try
             {
+                String cat_clubbed = "";
+                for(int i=0;i<category.length;i++)
+                {
+                    if(i==0)
+                        cat_clubbed=category[i];
+                    else
+                        cat_clubbed= cat_clubbed+","+category[i];
+                }
+                
                 Class.forName("com.mysql.jdbc.Driver");
                 String db_con = LuceneConstants.mysql_db_con;
                 String mysql_user = LuceneConstants.mysql_user_name;
@@ -74,14 +83,14 @@ public class register extends HttpServlet {
                 }
                 
                 //Insert data into table
-                String command="Insert into user_details values(?,?,?,?,?)";
+                String command="Insert into user_details values(?,?,?,?,?,?)";
                 PreparedStatement pstmt = con.prepareStatement(command);
                 pstmt.setString(1, uname);
                 pstmt.setString(2, pass);
                 pstmt.setInt(3, user_id);
                 pstmt.setString(4, email);
                 pstmt.setString(5, name);
-                
+                pstmt.setString(6, cat_clubbed);
             
                 int i =pstmt.executeUpdate();
                 if(i==1)
