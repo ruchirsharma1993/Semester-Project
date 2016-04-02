@@ -8,6 +8,14 @@
         <servlet-name>searcher</servlet-name>
         <servlet-class>com.searcher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>show_catnews</servlet-name>
+        <servlet-class>com.show_catnews</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>catwise_news</servlet-name>
+        <servlet-class>com.catwise_news</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>search_results</servlet-name>
         <url-pattern>/search_results</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>searcher</servlet-name>
         <url-pattern>/searcher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>show_catnews</servlet-name>
+        <url-pattern>/show_catnews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>catwise_news</servlet-name>
+        <url-pattern>/catwise_news</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

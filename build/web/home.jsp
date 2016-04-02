@@ -54,7 +54,17 @@
 					<div class="post">
 						<h2 class="title">Welcome, <%=user_name%></h2>
 					</div>
-					
+					<div id="htmltagcloud"> 
+                                        <span id="0" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Business">Business</a></span>
+                                         <span id="2" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Health">Health</a></span> 
+                                        <span id="3" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Politics">Politics</a></span>
+                                         <span id="4" class="wrd tagcloud8"><a href=show_latestnews.jsp?search_category=Science">Science</a></span> 
+                                        <span id="5" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Sports">Sports</a></span> 
+                                        <span id="6" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Technology">Technology</a></span>
+                                        <span id="7" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=World">World</a></span> 
+                                        <br><span id="1" class="wrd tagcloud8"><a href="show_latestnews.jsp?search_category=Entertainment">Entertainment</a></span>
+                                         
+                                        </div>
 					
 					<div style="clear: both;">&nbsp;</div>
 				</div>
