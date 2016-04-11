@@ -26,7 +26,7 @@ public class LuceneConstants
         public static final String ad_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ad_documents";
         
         //News Dataset Directory Path
-        public static final String news_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_articles";
+        public static final String news_dataDir = "E:\\work\\IIIT\\Semester_Project_Related\\news_articles\\news_articles";
         
         //News Index Directory path
         public static final String news_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_index";

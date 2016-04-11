@@ -3,6 +3,13 @@
     Created on : Mar 7, 2016, 12:38:04 PM
     Author     : ruchir-pc
 --%>
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Random"%>
 <%@page import="java.util.Collections"%>
@@ -143,8 +150,11 @@
                                     
                                     HashMap<String, Boolean> uniqueNews = new HashMap<String, Boolean>();
                                     
+                                    Map<String, Integer> buzz_words = new HashMap<String, Integer>();
+
                                     search_news = new Searcher(news_indexDir, false);
                                     search_ad = new Searcher(ad_indexDir, true);
+                                    String words_firstarticle = "";
                                     
                                     long startTime = System.currentTimeMillis();
                                     TopDocs hits = search_news.search(searchQuery);
@@ -168,7 +178,7 @@
                                             String path = news_dataDir + "\\" + file_name;
                                             
                                             BufferedReader br = new BufferedReader(new FileReader(path));
-                                            String news_title="", news_desc="", news_url="", news_category="";
+                                            String news_title="", news_desc="", news_url="", news_category="", news_buzzwords="";
                                             try
                                             {
                                                 br.readLine();
@@ -181,8 +191,23 @@
                                                 news_url = br.readLine().replace(" amp;", "&").replace("amp;","");
                                                 
                                                  news_desc = br.readLine();
-                                                  news_category = br.readLine();
-                                           
+                                                 news_category = br.readLine();
+                                                 news_buzzwords=br.readLine().toLowerCase().trim();
+                                                 System.out.println(news_buzzwords + ": " + news_category);
+                                                 if(words_firstarticle.equals(""))
+                                                     words_firstarticle = news_buzzwords;
+                                                 //Process news_buzzwords
+                                                 StringTokenizer buzz_st = new StringTokenizer(news_buzzwords, " ");
+                                                 while(buzz_st.hasMoreTokens())
+                                                 {
+                                                     String cur_buzz = buzz_st.nextToken();
+                                                     if(buzz_words.containsKey(cur_buzz))
+                                                     {
+                                                         buzz_words.put(cur_buzz, Integer.parseInt(buzz_words.get(cur_buzz).toString())+1);
+                                                     }
+                                                     else
+                                                         buzz_words.put(cur_buzz, 1);
+                                                 }
                                   %>
                                     <div class="post">
 						<h2 class="title"><a href="#"><%= news_title %></a></h2>
@@ -209,7 +234,32 @@
                                     }
                                     search_news.close();
 
-                                    TopDocs hits_ad = search_ad.search(searchQuery);
+                                    //Determine top 5 words for Searching Advertisements
+                                    Set<Entry<String, Integer>> set = buzz_words.entrySet();
+                                    List<Entry<String, Integer>> list = new ArrayList<Entry<String, Integer>>(set);
+                                    Collections.sort( list, new Comparator<Map.Entry<String, Integer>>()
+                                    {
+                                        public int compare( Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2 )
+                                        {
+                                            return (o2.getValue()).compareTo( o1.getValue() );
+                                        }
+                                    } );
+                                    
+                                    String ad_searchQuery = "";
+                                    int count = 0;
+                                    System.out.println("Printing Top 5 buzzwords");
+                                    for(Map.Entry<String, Integer> entry:list)
+                                    {
+                                        System.out.println(entry.getKey()+" ==== "+entry.getValue());
+                                        ad_searchQuery = ad_searchQuery + " " + entry.getKey().toString();
+                                        count++;
+                                        if(count==5)
+                                            break;
+                                    }
+                                    
+                                    if(ad_searchQuery.equals(""))
+                                        ad_searchQuery = words_firstarticle;
+                                    TopDocs hits_ad = search_ad.search(ad_searchQuery);
                                     System.out.println("Advertisement found: " + hits_ad.totalHits );
                                    
                                     ArrayList<String> ad_data = new ArrayList<String>();

@@ -11,6 +11,10 @@ import java.net.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+      
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
+
 /**
  *
  * @author ruchir-pc
@@ -33,7 +37,20 @@ public class get_catnews
 {
     public static void main(String args[]) throws Exception
     {
-        //String bing_url = "https://bingapis.azure-api.net/api/v5/news?category=sports&mkt=en-us";
+  
+        try{
+            Translate.setClientId("000000004818E476");
+            Translate.setClientSecret("nNvJWCKNw7cK37TqOABzIdcSkgJZzWQV");
+
+            String translatedText = Translate.execute("Bonjour le monde", Language.FRENCH, Language.ENGLISH);
+
+            System.out.println(translatedText);
+        }
+        catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    
+       /* //String bing_url = "https://bingapis.azure-api.net/api/v5/news?category=sports&mkt=en-us";
         String search_category = "Sports";
         String bing_url = "https://bingapis.azure-api.net/api/v5/news?category=" + search_category +"&mkt=en-us";
                                     
@@ -69,7 +86,7 @@ public class get_catnews
             } 
         } else {
             System.out.println("GET request not worked");
-        }
+        }*/
     }
     
 }
