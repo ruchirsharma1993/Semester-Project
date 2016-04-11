@@ -35,6 +35,9 @@ public class LuceneConstants
         public static final String ad_indexDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\ads_index";
         
         
+        //News DataSet Hindi path
+        public static final String news_hindidataDir = "E:\\work\\IIIT\\Semester_Project_Related\\index\\news_articles_hindi";
+        
         /*******************************************************************************************************************
                Constants for MYSQL DB Connection
         *******************************************************************************************************************/
